@@ -4,7 +4,6 @@
 # Sinh viên thực hiện
 - Họ tên: Thái Đình Trung
 - Lớp: DK24TTC7 
-- MSSV: 170124800
 - Giảng viên hướng dẫn: ThS. Đoàn Phước Miền
 # Tiến độ thực hiện
 ## Tuần 1
