@@ -1,0 +1,238 @@
+﻿@model ProTechTiveGear.Models.AccountClientEntity
+@{
+    ViewBag.Title = "Đăng Nhập | Phụ Kiện Shop";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<style>
+    /* ÉP TOÀN BỘ TRANG VÀO GIỮA */
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .limiter {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .container-login100 {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* Căn giữa ngang */
+        align-items: center;     /* Căn giữa dọc */
+        padding: 15px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        position: relative;
+    }
+
+    /* Lớp phủ tối để nổi bật form trên nền ảnh */
+    .container-login100::before {
+        content: "";
+        display: block;
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.6);
+    }
+
+    /* BOX CHỨA FORM (Căn giữa tuyệt đối) */
+    .wrap-login100 {
+        width: 450px;
+        background: rgba(44, 62, 80, 0.95); /* Xanh đen đồng bộ */
+        border-radius: 15px;
+        overflow: hidden;
+        padding: 50px 55px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        position: relative;
+        z-index: 2;
+        margin: auto; /* Cưỡng ép căn giữa nếu flex bị đè */
+    }
+
+    /* LOGO & TITLE */
+    .login100-form-logo {
+        font-size: 60px;
+        color: #e67e22;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: #fff;
+        margin: 0 auto 20px;
+    }
+
+    .login100-form-title {
+        font-size: 28px;
+        color: #fff;
+        line-height: 1.2;
+        text-align: center;
+        text-transform: uppercase;
+        display: block;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 30px;
+    }
+
+    /* INPUT STYLING */
+    .wrap-input100 {
+        width: 100%;
+        position: relative;
+        border-bottom: 2px solid rgba(255,255,255,0.2);
+        margin-bottom: 30px;
+    }
+
+    .label-input100 {
+        font-size: 13px;
+        color: #e67e22;
+        font-weight: 600;
+    }
+
+    .input100 {
+        font-size: 16px;
+        color: #fff;
+        line-height: 1.2;
+        display: block;
+        width: 100%;
+        background: transparent;
+        height: 45px;
+        border: none;
+        outline: none;
+        padding: 0 5px;
+    }
+
+    .input100::placeholder {
+        color: #888;
+    }
+
+    /* BUTTON STYLING */
+    .container-login100-form-btn {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-top: 10px;
+    }
+
+    .login100-form-btn {
+        font-size: 16px;
+        color: #fff !important;
+        line-height: 1.2;
+        text-transform: uppercase;
+        font-weight: 700;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 20px;
+        width: 100%;
+        height: 50px;
+        background-color: #e67e22 !important;
+        border-radius: 25px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.4s;
+        box-shadow: 0 10px 20px rgba(230, 126, 34, 0.3);
+    }
+
+    .login100-form-btn:hover {
+        background-color: #d35400 !important;
+        transform: scale(1.03);
+    }
+
+    /* LINKS */
+    .txt-links {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    .txt-links a {
+        font-size: 14px;
+        color: #bbb;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .txt-links a:hover {
+        color: #e67e22;
+    }
+
+    .error-summary {
+        background: rgba(231, 76, 60, 0.2);
+        color: #ff7675;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        text-align: center;
+    }
+</style>
+
+<div class="limiter">
+    <div class="container-login100" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBfbCLd5j4O69nDpmZ6qqfh9MTLf_Xha6Pow&s');">
+        
+        <div class="wrap-login100">
+            @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { enctype = "multipart/form-data", @class = "login100-form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <span class="login100-form-logo">
+                    <i class="zmdi zmdi-shield-security"></i>
+                </span>
+
+                <span class="login100-form-title">
+                    ĐĂNG NHẬP
+                </span>
+
+           if (!ViewData.ModelState.IsValid)
+{
+    <div class="error-summary">
+        @Html.ValidationSummary(true, "")
+    </div>
+}
+
+                <div class="wrap-input100">
+                    <span class="label-input100">Tài khoản</span>
+                    <input class="input100" type="text" name="userName" id="userName" placeholder="Nhập tên đăng nhập..." required>
+                </div>
+
+                <div class="wrap-input100">
+                    <span class="label-input100">Mật khẩu</span>
+                    <input class="input100" type="password" name="passWord" id="passWord" placeholder="********" required>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" type="submit">
+                        Đăng Nhập
+                    </button>
+                </div>
+
+                <div class="txt-links">
+                    <a href="@Url.Action("Register","Login")">
+                        Bạn chưa có tài khoản? <b>Đăng ký ngay</b>
+                    </a>
+                    <div style="margin-top: 10px;">
+                        <a href="/">
+                            <i class="fa fa-home"></i> Về trang chủ
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@* Script bổ sung đảm bảo không bị dính cookie cũ *@
+<script>
+    window.onload = function() {
+        document.cookie = "usr=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    };
+</script>

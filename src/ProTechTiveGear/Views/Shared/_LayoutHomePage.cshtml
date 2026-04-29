@@ -1,0 +1,238 @@
+﻿@using ProTechTiveGear.Models;
+@{
+    // Lấy thông tin khách hàng từ Session
+    Customer acc = Session["usr"] as Customer;
+    
+    // Kiểm tra Cookie an toàn hơn bằng toán tử điều kiện
+    string cookieUser = Request.Cookies["usr"]?.Value ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="~/img/fav-icon.png" type="image/x-icon" />
+    
+    <title>Thái Đình Trung</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/vendors/linearicons/style.css" rel="stylesheet">
+    <link href="~/vendors/flat-icon/flaticon.css" rel="stylesheet">
+    <link href="~/vendors/stroke-icon/style.css" rel="stylesheet">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+
+    <link href="~/vendors/revolution/css/settings.css" rel="stylesheet">
+    <link href="~/vendors/revolution/css/layers.css" rel="stylesheet">
+    <link href="~/vendors/revolution/css/navigation.css" rel="stylesheet">
+    <link href="~/vendors/animate-css/animate.css" rel="stylesheet">
+
+    <link href="~/vendors/owl-carousel/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/vendors/magnifc-popup/magnific-popup.css" rel="stylesheet">
+    <link href="~/vendors/nice-select/css/nice-select.css" rel="stylesheet">
+
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/responsive.css" rel="stylesheet">
+
+    <style>
+        /* Tùy chỉnh CSS để đồng bộ và làm đẹp nhanh */
+        body { font-family: 'Montserrat', sans-serif; }
+        
+        /* Custom Header */
+        .top_logo_header { background: #fff; padding: 20px 0; border-bottom: 1px solid #eee; }
+        .header_logo_inner { display: flex; align-items: center; justify-content: space-between; }
+        
+        .logo-box h1 { margin: 0; font-weight: 1000; text-transform: uppercase; font-size: 35px; letter-spacing: -1px; }
+        .logo-box h1 span { color: #e67e22; } /* Màu cam thương hiệu */
+        .logo-box small { font-size: 14px; color: #999; display: block; margin-top: -5px; font-weight: 800; }
+
+        /* User Area */
+        .user-nav { display: flex; align-items: center; gap: 20px; }
+        .user-nav a { color: #333; font-weight: 600; text-decoration: none; transition: 0.3s; }
+        .user-nav a:hover { color: #e67e22; }
+
+        .user-dropdown { position: relative; display: flex; align-items: center; cursor: pointer; }
+        .user-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #e67e22; margin-left: 10px; }
+        
+        /* Dropdown Menu Custom */
+        .dropdown-menu { border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 8px; padding: 10px 0; }
+        .dropdown-item { padding: 10px 20px; font-weight: 500; transition: 0.2s; }
+        .dropdown-item i { margin-right: 10px; color: #e67e22; }
+        .dropdown-item:hover { background-color: #fff4eb; color: #e67e22; }
+
+        /* Navigation Bar */
+        .middle_menu_three { background: #2c3e50 !important; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .navbar .nav-link { color: #fff !important; text-transform: uppercase; font-size: 14px; font-weight: 600; padding: 15px 20px !important; }
+        .navbar .nav-link:hover { background: rgba(255,255,255,0.1); color: #e67e22 !important; }
+
+        /* Footer */
+        .footer_area { background: #1a1a1a; color: #999; padding-top: 80px; }
+        .f_title h3 { color: #fff; font-size: 20px; margin-bottom: 30px; position: relative; padding-bottom: 10px; }
+        .f_title h3:after { content: ''; width: 50px; height: 2px; background: #e67e22; position: absolute; left: 0; bottom: 0; }
+        .f_contact_widget h4 { color: #e67e22; font-size: 22px; margin-bottom: 15px; }
+    </style>
+</head>
+
+<body>
+
+    <header class="main_header_three">
+        <div class="top_logo_header">
+            <div class="container">
+                <div class="header_logo_inner">
+                    <div class="h_left_text">
+                        <div class="media align-items-center">
+                            <i class="fa fa-phone-square" style="font-size: 30px; color: #e67e22; margin-right: 10px;"></i>
+                            <div class="media-body">
+                                <span style="display:block; font-size: 12px; color: #999;">Hotline 24/7:</span>
+                                <a href="tel:0983.993.262" style="font-weight: bold; color: #333;">0983.993.262</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="logo-box text-center">
+                        <a href="/">
+                            <h1 style="white-space: nowrap;">
+                                LINH KIỆN ĐIỆN TỬ
+                            </h1>
+                        </a>
+                    </div>
+
+                    <div class="h_right_text">
+                        <div class="user-nav">
+                            @if (Session["usr"] == null)
+                            {
+                                <a href="@Url.Action("Login","Login")"><i class="fa fa-sign-in"></i> ĐĂNG NHẬP</a>
+                                <span style="color:#ddd">|</span>
+                                <a href="@Url.Action("Register","Login")">ĐĂNG KÝ</a>
+                            }
+                            else
+                            {
+                                <div class="dropdown submenu">
+                                    <a class="dropdown-toggle d-flex align-items-center" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <div class="text-right mr-2">
+                                            <span style="display:block; font-size: 11px; color:#999">Xin chào,</span>
+                                            <span style="font-size: 14px;">@acc.Name</span>
+                                        </div>
+                                        <img class="user-avatar" src="@Url.Content("~/img/Item/avatar-default-icon.png")" alt="User Avatar">
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a class="dropdown-item" href="@Url.Action("Profile","AuraStore")"><i class="fa fa-user"></i> Hồ Sơ Cá Nhân</a></li>
+                                        <li><a class="dropdown-item" href="@Url.Action("ListOrderClient","AuraStore")"><i class="fa fa-list-alt"></i> Quản Lý Đơn Hàng</a></li>
+                                        <li><a class="dropdown-item" href="@Url.Action("Changepassword","Login")"><i class="fa fa-key"></i> Đổi Mật Khẩu</a></li>
+                                        <div class="dropdown-divider"></div>
+                                        <li><a class="dropdown-item text-danger" href="@Url.Action("SignOut","AuraStore")"><i class="fa fa-power-off"></i> Đăng Xuất</a></li>
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="middle_menu_three">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-dark p-0">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav_content">
+                        <span class="my_toggle_menu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="main_nav_content">
+                        @Html.Action("Menu", "AuraStore")
+                    </div>
+
+                    <div class="search-icon ml-auto">
+                         <a href="#" style="color: white; font-size: 18px;"><i class="fa fa-search"></i></a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="main_slider_area">
+        <div id="main_slider" class="rev_slider" data-version="5.3.1.6">
+            <ul>
+                @Html.Action("Banner", "AuraStore")
+            </ul>
+        </div>
+    </section>
+
+    <div class="main-content-wrapper">
+        @RenderBody()
+    </div>
+
+    <footer class="footer_area">
+        <div class="footer_widgets">
+            <div class="container">
+                <div class="row footer_wd_inner">
+                    <div class="col-lg-4 col-md-6">
+                        <aside class="f_widget f_about_widget">
+                            <div class="f_title"><h3>Về Chúng Tôi</h3></div>
+                            <p>Thái Đình Trung</p>
+                            <ul class="nav mt-4">
+                                <li><a href="#" style="background:#3b5998; color:white; width:35px; height:35px; display:inline-block; text-align:center; line-height:35px; border-radius:4px; margin-right:10px;"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#" style="background:#1da1f2; color:white; width:35px; height:35px; display:inline-block; text-align:center; line-height:35px; border-radius:4px; margin-right:10px;"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#" style="background:#ea4335; color:white; width:35px; height:35px; display:inline-block; text-align:center; line-height:35px; border-radius:4px;"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+                        </aside>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-6">
+                        <aside class="f_widget f_link_widget">
+                            <div class="f_title"><h3>Hỗ Trợ Khách Hàng</h3></div>
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="py-1 d-block text-muted text-decoration-none">Chính sách bảo hành</a></li>
+                                <li><a href="#" class="py-1 d-block text-muted text-decoration-none">Hướng dẫn mua hàng</a></li>
+                                <li><a href="#" class="py-1 d-block text-muted text-decoration-none">Vận chuyển & Giao nhận</a></li>
+                                <li><a href="#" class="py-1 d-block text-muted text-decoration-none">Điều khoản sử dụng</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <aside class="f_widget f_contact_widget">
+                            <div class="f_title"><h3>Thông Tin Liên Hệ</h3></div>
+                            <h4>Hotline: 0983.993.262</h4>
+                            <p><i class="fa fa-map-marker text-warning mr-2"></i> Địa chỉ: Vĩnh Long</p>
+                            <p><i class="fa fa-envelope text-warning mr-2"></i> Email: thaidinhtrung@gmail.com</p>
+                            <p><i class="fa fa-clock-o text-warning mr-2"></i> Giờ làm việc: 08:00 - 21:00</p>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copy-right text-center py-4 border-top border-dark mt-5">
+            <p class="m-0">&copy; @DateTime.Now.Year Bản quyền thuộc về <b>Thái Đình Trung</b></p>
+        </div>
+    </footer>
+
+    @Html.Action("Search", "AuraStore")
+
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    
+    <script src="~/vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
+    <script src="~/vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="~/vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+    <script src="~/vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
+    <script src="~/vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script src="~/vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script src="~/vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+
+    <script src="~/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/vendors/magnifc-popup/jquery.magnific-popup.min.js"></script>
+    <script src="~/vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/vendors/jquery-ui/jquery-ui.min.js"></script>
+    
+    <script src="~/Scripts/theme.js"></script>
+</body>
+</html>
